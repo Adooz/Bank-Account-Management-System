@@ -1,59 +1,46 @@
 from bank_account_management_system.bank_account import BankAccount
-from bank_account_management_system.savings_account import SavingsAccount
 from bank_account_management_system.checking_account import CheckingAccount
+from bank_account_management_system.savings_account import SavingsAccount
 
-# Function to display the main menu
-def display_menu():
-    print("Adooz Bank - Account Management System")
-    print("1. Create a Bank Account")
-    print("2. Create a Savings Account")
-    print("3. Create a Checking Account")
-    print("4. Exit")
-
-# Function to create a bank account
-def create_bank_account():
-    account_number = input("Enter account number: ")
-    account_holder_name = input("Enter account holder name: ")
-    balance = float(input("Enter initial balance: "))
-    account = BankAccount(account_number, account_holder_name, balance)
-    print("Bank Account created successfully!")
-
-# Function to create a savings account
-def create_savings_account():
-    account_number = input("Enter account number: ")
-    account_holder_name = input("Enter account holder name: ")
-    balance = float(input("Enter initial balance: "))
-    interest_rate = float(input("Enter interest rate: "))
-    account = SavingsAccount(account_number, account_holder_name, balance, interest_rate)
-    print("Savings Account created successfully!")
-
-# Function to create a checking account
-def create_checking_account():
-    account_number = input("Enter account number: ")
-    account_holder_name = input("Enter account holder name: ")
-    balance = float(input("Enter initial balance: "))
-    transaction_fee = float(input("Enter transaction fee: "))
-    account = CheckingAccount(account_number, account_holder_name, balance, transaction_fee)
-    print("Checking Account created successfully!")
-
-# Main program
 def main():
+    # Create a bank account
+    account = BankAccount("123456789", "Kingsley Ndonake", 1000.0)
+
+    # Perform actions based on user input
     while True:
-        display_menu()
+        print("\nWelcome to Adooz Bank\n")
+        print("1. Deposit")
+        print("2. Withdraw")
+        print("3. Check Balance")
+        print("4. Quit")
+
         choice = input("Enter your choice (1-4): ")
 
-        if choice == '1':
-            create_bank_account()
-        elif choice == '2':
-            create_savings_account()
-        elif choice == '3':
-            create_checking_account()
-        elif choice == '4':
-            print("Exiting the program...")
+        if choice == "1":
+            amount = float(input("Enter the deposit amount: "))
+            account.deposit(amount)
+            print("Deposit successful.")
+
+        elif choice == "2":
+            amount = float(input("Enter the withdrawal amount: "))
+            if isinstance(account, CheckingAccount):
+                account.withdraw_with_fee(amount)
+            else:
+                account.withdraw(amount)
+            print("Withdrawal successful.")
+
+        elif choice == "3":
+            print("Account Holder Name: ", account.account_holder_name)
+            print("Account Number: ", account.account_number)
+            print("Current Balance: ", account.balance)
+
+        elif choice == "4":
+            print("Exiting the Bank Account Management System..\n.")
             break
+
         else:
             print("Invalid choice. Please try again.")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
